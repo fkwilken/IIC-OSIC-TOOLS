@@ -70,7 +70,7 @@ if [ -z ${FOSS_INIT_DONE+x} ]; then
     _path_add_tool_bin      "nvc"
     _path_add_tool_bin      "openroad"
     _path_add_tool_bin      "opensta"
-	_path_add_tool_bin	"openvaf"
+	_path_add_tool_bin	    "openvaf"
     _path_add_tool_custom   "osic-multitool"
     _path_add_tool_bin      "padring"
     _path_add_tool_bin      "pyopus"
@@ -78,6 +78,7 @@ if [ -z ${FOSS_INIT_DONE+x} ]; then
     _path_add_tool_bin      "qucs-s"
     _path_add_tool_custom   "rftoolkit/bin"
     _path_add_tool_bin      "slang"
+    _path_add_tool_bin      "surfer"
     _path_add_tool_bin      "verilator"
     _path_add_tool_bin      "xschem"
     _path_add_tool_bin      "xyce"
@@ -122,11 +123,11 @@ export PDKPATH=$PDK_ROOT/$PDK
 export STD_CELL_LIBRARY=sky130_fd_sc_hd
 export SPICE_USERINIT_DIR=$PDK_ROOT/$PDK/libs.tech/ngspice
 
-# FIXME this gets rid of a few libGL errors
+# this gets rid of a few libGL errors
 # https://unix.stackexchange.com/questions/589236/libgl-error-no-matching-fbconfigs-or-visuals-found-glxgears-error-docker-cu
 export LIBGL_ALWAYS_INDIRECT=1
 
-# FIXME this gets rid of the DBUS warning
+# this gets rid of the DBUS warning
 # https://unix.stackexchange.com/questions/230238/x-applications-warn-couldnt-connect-to-accessibility-bus-on-stderr/230442#230442
 export NO_AT_BRIDGE=1
 
@@ -150,6 +151,10 @@ alias k='klayout -nn $PDKPATH/libs.tech/klayout/tech/$PDK.lyt'
 alias ke='klayout -e -nn $PDKPATH/libs.tech/klayout/tech/$PDK.lyt'
 
 alias openlane='openlane --manual-pdk'
+alias surfer='LIBGL_ALWAYS_INDIRECT=0 surfer'
+# IHP-SG13G2 needs this plugin, using an alias seems to the the only proper solution for now
+alias xyce='xyce -plugin $PDK_ROOT/ihp-sg13g2/libs.tech/xyce/plugins/Xyce_Plugin_PSP103_VA.so'
+alias Xyce='Xyce -plugin $PDK_ROOT/ihp-sg13g2/libs.tech/xyce/plugins/Xyce_Plugin_PSP103_VA.so'
 
 #FIXME Show hint that OpenLane(1) has been removed
 alias flow.tcl='printf "[INFO] OpenLane(1) has been depreciated.\n[INFO] Please use OpenLane2 (start with <openlane>).\n"'
@@ -197,6 +202,19 @@ alias gr='git remote -v'
 alias gl='git log'
 alias gln='git log --name-status'
 alias gsss='git submodule status'
+
+#----------------------------------------
+# user functions
+#----------------------------------------
+
+function mdview() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: mdview <file.md>"
+    else
+        pandoc "$1" > "/tmp/$1.html"
+        xdg-open "/tmp/$1.html"
+  fi
+}
 
 #----------------------------------------
 # adapt user prompt

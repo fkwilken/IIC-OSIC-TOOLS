@@ -38,7 +38,7 @@ cp svase "${TOOLS}/${PULP_NAME}/bin"
 # Install Verible
 # ---------------
 cd /tmp || exit 1
-# We don't build locally (too many strange dependencies), but get the binary instead
+# we don't build locally (too many strange dependencies), but get the binary instead
 echo "[INFO] Installing Verible"
 if [ "$(arch)" == "aarch64" ]; then
     CPUID="arm64"
@@ -54,9 +54,9 @@ cp verible*/bin/* "${TOOLS}/${PULP_NAME}/bin"
 # ----------
 cd /tmp || exit 1
 echo "[INFO] Building SV2V"
-# Get Haskell stack first
+# get Haskell stack first
 wget -qO- https://get.haskellstack.org/ | sh
-# Now build SV2V using Haskell and Stack
+# now build SV2V using Haskell and Stack
 git clone --depth=1 https://github.com/zachjs/sv2v.git
 cd sv2v || exit 1
 stack install --install-ghc --local-bin-path bin --stack-root /tmp/stack

@@ -34,7 +34,7 @@ make install
 
 # enable OSDI for IHP PDK
 FNAME="${TOOLS}/${NGSPICE_NAME}/share/ngspice/scripts/spinit"
-if [ -f "$PDK_ROOT"/sg13g2/libs.tech/ngspice/openvaf/psp103_nqs.osdi ]; then
+if [ -f "$PDK_ROOT"/ihp-sg13g2/libs.tech/ngspice/openvaf/psp103_nqs.osdi ]; then
     cp "$FNAME" "$FNAME".bak
     sed -i "s/unset osdi_enabled/* unset osdi_enabled/g" "$FNAME"
 
@@ -47,13 +47,13 @@ if [ -f "$PDK_ROOT"/sg13g2/libs.tech/ngspice/openvaf/psp103_nqs.osdi ]; then
     sed -i "/vbic_4T_et_cf.osdi/s/^/#/" "$FNAME"
 
     # copy OSDI PSP model for IHP
-    cp "$PDK_ROOT/sg13g2/libs.tech/ngspice/openvaf/psp103_nqs.osdi" "${TOOLS}/${NGSPICE_NAME}/lib/ngspice/psp103_nqs.osdi"
+    cp "$PDK_ROOT/ihp-sg13g2/libs.tech/ngspice/openvaf/psp103_nqs.osdi" "${TOOLS}/${NGSPICE_NAME}/lib/ngspice/psp103_nqs.osdi"
 fi
 
 # add BSIMCMG model, required for ASAP7
 git clone --depth=1 https://github.com/dwarning/VA-Models.git vamodels
 MODEL=bsimcmg
 cd vamodels/code/$MODEL/vacode || exit 1
-"$TOOLS/$OPENVAF_NAME/bin/openvaf" $MODEL.va
+"$TOOLS/openvaf/bin/openvaf" $MODEL.va
 cp $MODEL.osdi "${TOOLS}/${NGSPICE_NAME}/lib/ngspice/$MODEL.osdi"
 echo "osdi ${TOOLS}/${NGSPICE_NAME}/lib/ngspice/$MODEL.osdi" >> "$FNAME"

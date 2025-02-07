@@ -8,5 +8,6 @@ cd "${CVC_RV_NAME}" || exit 1
 git checkout "${CVC_RV_REPO_COMMIT}"
 autoreconf -vif
 ./configure --disable-nls --prefix="${TOOLS}/${CVC_RV_NAME}"
+
 make -j"$(nproc)"
 make install
