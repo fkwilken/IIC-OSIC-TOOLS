@@ -13,7 +13,7 @@ PDK="ihp-sg13g2"
 #git clone --depth=1 https://github.com/IHP-GmbH/IHP-Open-PDK.git ihp
 git clone https://github.com/IHP-GmbH/IHP-Open-PDK.git ihp
 cd ihp || exit 1
-#FIXME for now uses branch "dev" to get the latest releases
+# for now uses branch "dev" to get the latest releases
 git checkout dev
 git submodule update --init --recursive
 
@@ -22,15 +22,18 @@ if [ -d $PDK ]; then
 	mv $PDK "$PDK_ROOT/$PDK"
 fi
 
-# compile .va models for ngspice
-cd "$PDK_ROOT/$PDK/libs.tech/ngspice/openvaf" || exit 1
-"$TOOLS/openvaf/bin/openvaf" --target_cpu generic psp103_nqs.va
-
-# compile PSP model for xyce
-cd "$PDK_ROOT/$PDK/libs.tech/xyce/adms" || exit 1 
-export PATH=$TOOLS/xyce/bin:$PATH
+# compile the additional Verilog-A models
+cd "$PDK_ROOT/$PDK/libs.tech/verilog-a" || exit 1
+# ngspice
+export PATH="$TOOLS/openvaf/bin:$PATH"
+sed -i 's/\bopenvaf\b/& --target_cpu generic/' openvaf-compile-va.sh
+chmod +x openvaf-compile-va.sh
+./openvaf-compile-va.sh
+# xyce
+export PATH="$TOOLS/xyce/bin:$PATH"
+chmod +x adms-compile-va.sh
 ./adms-compile-va.sh
-if [ ! -f ../plugins/Xyce_Plugin_PSP103_VA.so ]; then
+if [ ! -f ../xyce/plugins/Xyce_Plugin_PSP103_VA.so ] || [ ! -f ../xyce/plugins/Xyce_Plugin_r3_cmc.so ]; then
     echo "[ERROR] ADMS model compilation for Xyce failed!"
     exit 1
 fi

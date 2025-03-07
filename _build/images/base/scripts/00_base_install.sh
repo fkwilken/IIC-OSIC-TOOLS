@@ -8,7 +8,6 @@ echo "[INFO] Updating, upgrading and installing packages with APT"
 apt -y update
 apt -y upgrade
 apt -y install \
-	adms \
 	ant \
 	autoconf \
 	automake \
@@ -103,6 +102,7 @@ apt -y install \
 	libqt5multimediawidgets5 \
 	libqt5svg5-dev \
 	libqt5xmlpatterns5-dev \
+	libqt6svg6-dev \
 	libre2-dev \
 	libreadline-dev \
 	libsm-dev \
@@ -128,6 +128,7 @@ apt -y install \
 	libz3-dev \
 	libzip-dev \
 	libzstd-dev \
+	linguist-qt6 \
 	lld-16 \
 	llvm-16 \
 	llvm-16-dev \
@@ -146,16 +147,23 @@ apt -y install \
 	python3-dev \
 	python3-pip \
 	python3-pyqt5 \
+	python3-pyqt6 \
 	python3-setuptools \
 	python3-setuptools-rust \
 	python3-tk \
 	python3-venv \
 	python3-virtualenv \
 	python3-wheel \
+	qmake6 \
 	qt5-image-formats-plugins \
 	qt5-qmake \
 	qtbase5-dev \
 	qtbase5-dev-tools \
+	qt6-base-dev \
+	qt6-charts-dev \
+	qt6-tools-dev \
+	qt6-tools-dev-tools \
+	qt6-l10n-tools \
 	qtchooser \
 	qtmultimedia5-dev \
 	qttools5-dev \

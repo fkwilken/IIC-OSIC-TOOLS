@@ -12,6 +12,10 @@ Example:
 DOCKER_EXTRA_PARAMS='--security-opt seccomp=unconfined' ./start_x.sh
 ```
 
+### Frequent crashes of `xschem` on Windows 11
+
+Since the update of the image to Ubuntu 24.04 LTS with tag `2025.01` there are reports of frequent crashes of `xschem` under Windows 11 using certain versions of specific X-servers. It has been found that using <https://vcxsrv.com> version `64.1.17.2.0` under Windows 11 works well (see [issue 92](https://github.com/iic-jku/IIC-OSIC-TOOLS/issues/92)).
+
 ### Issues with OpenGL on some environments
 
 A few applications are using OpenGL graphics, which can lead to issues on some computing environments. A (potential) remedy is to enable SW-rendering with can be achieved by setting the following environment variable inside the Docker VM:
@@ -41,7 +45,3 @@ The visualization tool "AppCSXCAD" will not work in the container with our defau
 `PyOPUS` is removed, as build fails, and it forces `numpy` to version 1.
 
 ## Build
-
-### Boost
-
-Boost is currently installed from the package sources of Ubuntu and a manual install/build. This is currently required, as there are some dependencies from packages, but also, some manually built tools require a newer boost version. This issue will be resolved in the future when switching to a more modern Ubuntu release.
